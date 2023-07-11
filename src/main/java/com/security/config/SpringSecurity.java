@@ -1,4 +1,4 @@
-package com.config;
+package com.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +36,7 @@ public class SpringSecurity {
             form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/users")
+                .defaultSuccessUrl("/")
                 .permitAll()
         ).logout(
             logout -> logout

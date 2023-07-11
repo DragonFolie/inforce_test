@@ -14,45 +14,48 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 
-@Getter
-@Setter
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "users")
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  Long id;
 
   @Column(name = "first_name")
-  private String firstName;
+  String firstName;
 
   @Column(name = "last_name")
-  private String lastName;
+  String lastName;
 
   @Column(name = "country")
-  private String country;
+  String country;
 
   @Column(name = "email")
-  private String email;
+  String email;
 
   @Column(name = "password")
-  private String password;
+  String password;
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(
       name = "users_roles",
       joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
       inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
-  private List<Role> roles = new ArrayList<>();
+
+  List<Role> roles = new ArrayList<>();
 
 }

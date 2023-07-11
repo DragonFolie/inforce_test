@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UpdateUserController {
 
-  private UserService userService;
+  private final UserService userService;
 
   public UpdateUserController(UserService userService) {
     this.userService = userService;
@@ -28,7 +28,6 @@ public class UpdateUserController {
 
   @PostMapping("/update")
   public String updateUser(String field, String search, String value) {
-    System.out.println("Contro"  + "  " + field + "  " + search + "  " + value);
     userService.updateUser(field, search, value);
     return "redirect:/index";
   }

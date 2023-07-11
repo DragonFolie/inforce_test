@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AuthController {
 
-  private UserService userService;
+  private final UserService userService;
 
 
   public AuthController(UserService userService) {
@@ -26,13 +26,13 @@ public class AuthController {
 
 
   @GetMapping("index")
-  public String home() {
+  public final String index() {
     return "index";
   }
 
 
   @GetMapping("/login")
-  public String loginForm() {
+  public final String loginForm() {
     return "login";
   }
 

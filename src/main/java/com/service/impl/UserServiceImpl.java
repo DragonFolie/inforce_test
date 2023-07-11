@@ -11,28 +11,34 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  private UserRepository userRepository;
-  private RoleRepository roleRepository;
-  private PasswordEncoder passwordEncoder;
+  private final UserRepository userRepository;
+  private final RoleRepository roleRepository;
+  private final PasswordEncoder passwordEncoder;
 
-  public UserServiceImpl(UserRepository userRepository,
-                         RoleRepository roleRepository,
-                         PasswordEncoder passwordEncoder) {
-    this.userRepository = userRepository;
-    this.roleRepository = roleRepository;
-    this.passwordEncoder = passwordEncoder;
+
+  @Override
+  public List<UserDto> findAllUsers() {
+    List<User> users = userRepository.findAll();
+    return users.stream().map((user) -> convertEntityToDto(user))
+        .collect(Collectors.toList());
   }
 
-  public static User convertOptionalToUser(Optional<User> optionalUser) {
-    return optionalUser.orElseThrow(() -> new NoSuchElementException("User not found"));
+
+  @Override
+  public User findByEmail(String email) {
+
+    return userRepository.findByEmail(email);
   }
+
 
   @Override
   public void saveUser(UserDto userDto) {
@@ -53,22 +59,10 @@ public class UserServiceImpl implements UserService {
     userRepository.save(user);
   }
 
-  @Override
-  public User findByEmail(String email) {
-
-    return userRepository.findByEmail(email);
-  }
-
-  @Override
-  public List<UserDto> findAllUsers() {
-    List<User> users = userRepository.findAll();
-    return users.stream().map((user) -> convertEntityToDto(user))
-        .collect(Collectors.toList());
-  }
 
   @Override
   public void updateUser(String field, String search, String value) {
-    boolean exists = userRepository.existsByEmail(search);
+    final boolean exists = userRepository.existsByEmail(search);
     if (exists) {
       if (field.equals("firstName")) {
         userRepository.updateFirstNameField(value, search);
@@ -82,6 +76,8 @@ public class UserServiceImpl implements UserService {
     }
   }
 
+
+
   private UserDto convertEntityToDto(User user) {
     return UserDto
         .builder()
@@ -94,8 +90,9 @@ public class UserServiceImpl implements UserService {
   }
 
   private Role checkRoleExist() {
-    Role role = new Role();
-    role.setName("ROLE_ADMIN");
+    Role role = Role.builder()
+            .name("ROLE_ADMIN")
+                .build();
     return roleRepository.save(role);
   }
 }
