@@ -1,7 +1,7 @@
 package com.controller;
 
-import com.entity.User;
 import com.dto.UserDto;
+import com.entity.User;
 import com.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +25,11 @@ public class UpdateUserController {
     return "update_page";
   }
 
+
   @PostMapping("/update")
-  public String updateUser(User user) {
-    userService.updateUser(user);
+  public String updateUser(String field, String search, String value) {
+    System.out.println("Contro"  + "  " + field + "  " + search + "  " + value);
+    userService.updateUser(field, search, value);
     return "redirect:/index";
   }
 

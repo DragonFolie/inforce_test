@@ -6,16 +6,14 @@ import com.entity.User;
 import com.repository.RoleRepository;
 import com.repository.UserRepository;
 import com.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,7 +51,6 @@ public class UserServiceImpl implements UserService {
     }
     user.setRoles(Arrays.asList(role));
     userRepository.save(user);
-    System.out.println(userDto);
   }
 
   @Override
@@ -70,13 +67,22 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User updateUser(User user) {
-
-    userRepository.
-    return userRepository.save(user);
+  public void updateUser(String field, String search, String value) {
+    boolean exists = userRepository.existsByEmail(search);
+    if (exists) {
+      if (field.equals("firstName")) {
+        userRepository.updateFirstNameField(value, search);
+      }
+      if (field.equals("lastName")) {
+        userRepository.updateLastNameField(value, search);
+      }
+      if (field.equals("country")) {
+        userRepository.updateCountryNameField(value, search);
+      }
+    }
   }
 
-  public UserDto convertEntityToDto(User user) {
+  private UserDto convertEntityToDto(User user) {
     return UserDto
         .builder()
         .firstName(user.getFirstName())
