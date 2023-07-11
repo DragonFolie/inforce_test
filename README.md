@@ -24,7 +24,12 @@
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-In project you have  "Data" folder with database set up sql script
+You have 4 link
+1) .../index
+2) .../login
+3) .../register
+4) .../users ( list of all users )
+5) .../update ( page where you can update data of user )
 
 
 
