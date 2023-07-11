@@ -24,7 +24,7 @@
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-You have 4 link
+You have 5 link
 1) .../index
 2) .../login
 3) .../register
