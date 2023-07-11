@@ -15,7 +15,7 @@
 
 1. Open project
 2. Change setting in application.properties to your database link
-3. Run sql script in data/db-creating.sql
+3. Use sql script in data/db-creating.sql to create yuor DB
 4. Run springboot starter class
 
 
