@@ -25,6 +25,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "roles")
 public class Role {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
